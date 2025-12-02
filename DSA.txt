@@ -1,0 +1,409 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+/********** 1. STRING OPERATIONS **********/
+void string_operations() {
+    char s1[50], s2[50];
+
+    printf("Enter String 1: ");
+    scanf("%s", s1);
+    printf("Enter String 2: ");
+    scanf("%s", s2);
+
+    printf("\nLength of s1 = %lu\n", strlen(s1));
+
+    char copy[50];
+    strcpy(copy, s1);
+    printf("Copy = %s\n", copy);
+
+    char concat[100];
+    strcpy(concat, s1);
+    strcat(concat, s2);
+    printf("Concatenation = %s\n", concat);
+
+    printf("Comparison = %d\n", strcmp(s1, s2));
+
+    /* SAMPLE OUTPUT:
+    Enter String 1: hello
+    Enter String 2: world
+
+    Length of s1 = 5
+    Copy = hello
+    Concatenation = helloworld
+    Comparison = -1
+    */
+}
+
+/********** 2. LINEAR SEARCH **********/
+void linear_search() {
+    int n, key;
+    printf("Enter size: ");
+    scanf("%d",&n);
+    int a[n];
+
+    printf("Enter elements: ");
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    printf("Enter key: ");
+    scanf("%d",&key);
+
+    for(int i=0;i<n;i++){
+        if(a[i] == key){
+            printf("Element found at index %d\n", i);
+            /* SAMPLE OUTPUT:
+            Enter size: 5
+            Enter elements: 10 20 30 40 50
+            Enter key: 30
+            Element found at index 2
+            */
+            return;
+        }
+    }
+    printf("Element not found\n");
+}
+
+/********** 3. BINARY SEARCH **********/
+void binary_search() {
+    int n, key, l=0, r, mid;
+    printf("Enter size: ");
+    scanf("%d",&n);
+
+    int a[n];
+    printf("Enter sorted elements: ");
+    for(int i=0;i<n;i++) scanf("%d",&a[i]);
+
+    printf("Enter key: ");
+    scanf("%d",&key);
+
+    r = n-1;
+
+    while(l <= r){
+        mid = (l+r)/2;
+        if(a[mid] == key){
+            printf("Element found at index %d\n", mid);
+            /* SAMPLE OUTPUT:
+            Enter size: 6
+            Enter sorted elements: 2 5 8 12 16 20
+            Enter key: 12
+            Element found at index 3
+            */
+            return;
+        }
+        else if(a[mid] < key) l = mid+1;
+        else r = mid-1;
+    }
+    printf("Element not found\n");
+}
+
+/********** 4. MATRIX MULTIPLICATION **********/
+void matrix_multiply() {
+    int a[2][2], b[2][2], c[2][2];
+
+    printf("Enter matrix A:\n");
+    for(int i=0;i<2;i++)
+        for(int j=0;j<2;j++)
+            scanf("%d",&a[i][j]);
+
+    printf("Enter matrix B:\n");
+    for(int i=0;i<2;i++)
+        for(int j=0;j<2;j++)
+            scanf("%d",&b[i][j]);
+
+    for(int i=0;i<2;i++)
+        for(int j=0;j<2;j++){
+            c[i][j] = 0;
+            for(int k=0;k<2;k++)
+                c[i][j] += a[i][k] * b[k][j];
+        }
+
+    printf("Result:\n");
+    for(int i=0;i<2;i++){
+        for(int j=0;j<2;j++)
+            printf("%d ",c[i][j]);
+        printf("\n");
+    }
+
+    /* SAMPLE OUTPUT:
+    Enter matrix A:
+    1 2
+    3 4
+    Enter matrix B:
+    2 0
+    1 2
+
+    Result:
+    4 4
+    10 8
+    */
+}
+
+/********** 5. MATRIX ADDITION **********/
+void matrix_add() {
+    int a[2][2], b[2][2], c[2][2];
+
+    printf("Enter matrix A:\n");
+    for(int i=0;i<2;i++)
+        for(int j=0;j<2;j++)
+            scanf("%d",&a[i][j]);
+
+    printf("Enter matrix B:\n");
+    for(int i=0;i<2;i++)
+        for(int j=0;j<2;j++)
+            scanf("%d",&b[i][j]);
+
+    printf("Sum:\n");
+    for(int i=0;i<2;i++){
+        for(int j=0;j<2;j++){
+            c[i][j] = a[i][j] + b[i][j];
+            printf("%d ",c[i][j]);
+        }
+        printf("\n");
+    }
+
+    /* SAMPLE OUTPUT:
+    Enter matrix A:
+    1 2
+    3 4
+    Enter matrix B:
+    5 6
+    7 8
+
+    Sum:
+    6 8
+    10 12
+    */
+}
+
+/********** 6. STACK OPERATIONS **********/
+int stack[MAX], top = -1;
+
+void push(int x){
+    if(top == MAX-1) printf("Stack Overflow\n");
+    else stack[++top] = x;
+}
+
+int pop(){
+    if(top == -1) return -1;
+    return stack[top--];
+}
+
+void stack_operations(){
+    push(10);
+    push(20);
+    push(30);
+
+    printf("Pop: %d\n", pop());
+    printf("Pop: %d\n", pop());
+
+    /* SAMPLE OUTPUT:
+    Pop: 30
+    Pop: 20
+    */
+}
+
+/********** 7. SIMPLE QUEUE **********/
+int q[MAX], front = 0, rear = -1, size = 0;
+
+void enqueue(int x){
+    if(size == MAX) printf("Queue Full\n");
+    else {
+        rear = (rear+1) % MAX;
+        q[rear] = x;
+        size++;
+    }
+}
+
+int dequeue_q(){
+    if(size == 0) return -1;
+    int x = q[front];
+    front = (front+1) % MAX;
+    size--;
+    return x;
+}
+
+void queue_operations(){
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+
+    printf("Dequeue: %d\n", dequeue_q());
+    printf("Dequeue: %d\n", dequeue_q());
+
+    /* SAMPLE OUTPUT:
+    Dequeue: 10
+    Dequeue: 20
+    */
+}
+
+/********** 8. SINGLE LINKED LIST **********/
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+void linked_list(){
+    struct Node *a = malloc(sizeof(struct Node));
+    struct Node *b = malloc(sizeof(struct Node));
+    struct Node *c = malloc(sizeof(struct Node));
+
+    a->data=10; b->data=20; c->data=30;
+    a->next=b; b->next=c; c->next=NULL;
+
+    struct Node *head=a;
+
+    printf("Linked List: ");
+    while(head){
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+
+    /* SAMPLE OUTPUT:
+    Linked List: 10 -> 20 -> 30 -> NULL
+    */
+}
+
+/********** 9. BUBBLE SORT **********/
+void bubble_sort(){
+    int a[5] = {5,2,8,1,3};
+
+    for(int i=0;i<4;i++)
+        for(int j=0;j<4-i;j++)
+            if(a[j] > a[j+1]){
+                int t=a[j];
+                a[j]=a[j+1];
+                a[j+1]=t;
+            }
+
+    printf("Sorted: ");
+    for(int i=0;i<5;i++) printf("%d ", a[i]);
+    printf("\n");
+
+    /* SAMPLE OUTPUT:
+    Sorted: 1 2 3 5 8
+    */
+}
+
+/********** 10. INSERTION SORT **********/
+void insertion_sort(){
+    int a[5]={9,5,1,4,3};
+
+    for(int i=1;i<5;i++){
+        int key = a[i];
+        int j = i-1;
+        while(j>=0 && a[j] > key){
+            a[j+1] = a[j];
+            j--;
+        }
+        a[j+1] = key;
+    }
+
+    printf("Sorted: ");
+    for(int i=0;i<5;i++) printf("%d ", a[i]);
+    printf("\n");
+
+    /* SAMPLE OUTPUT:
+    Sorted: 1 3 4 5 9
+    */
+}
+
+/********** 11. MERGE SORT **********/
+void merge(int a[], int l, int m, int r){
+    int temp[100], i=l, j=m+1, k=0;
+
+    while(i<=m && j<=r)
+        temp[k++] = (a[i] < a[j]) ? a[i++] : a[j++];
+
+    while(i<=m) temp[k++] = a[i++];
+    while(j<=r) temp[k++] = a[j++];
+
+    for(i=l,j=0; i<=r; i++,j++) a[i] = temp[j];
+}
+
+void merge_sort(int a[], int l, int r){
+    if(l<r){
+        int m = (l+r)/2;
+        merge_sort(a,l,m);
+        merge_sort(a,m+1,r);
+        merge(a,l,m,r);
+    }
+}
+
+void mergesort_main(){
+    int a[6]={6,3,9,5,2,8};
+    merge_sort(a,0,5);
+
+    printf("Sorted: ");
+    for(int i=0;i<6;i++) printf("%d ",a[i]);
+    printf("\n");
+
+    /* SAMPLE OUTPUT:
+    Sorted: 2 3 5 6 8 9
+    */
+}
+
+/********** 12. SELECTION SORT **********/
+void selection_sort(){
+    int a[5]={64,25,12,22,11};
+
+    for(int i=0;i<4;i++){
+        int min=i;
+        for(int j=i+1;j<5;j++)
+            if(a[j] < a[min])
+                min=j;
+
+        int t=a[i]; a[i]=a[min]; a[min]=t;
+    }
+
+    printf("Sorted: ");
+    for(int i=0;i<5;i++) printf("%d ", a[i]);
+    printf("\n");
+
+    /* SAMPLE OUTPUT:
+    Sorted: 11 12 22 25 64
+    */
+}
+
+/********** MAIN MENU **********/
+int main() {
+    int ch;
+
+    do{
+        printf("\n----------- MENU -----------\n");
+        printf("1. String operations\n");
+        printf("2. Linear search\n");
+        printf("3. Binary search\n");
+        printf("4. Matrix multiplication\n");
+        printf("5. Matrix addition\n");
+        printf("6. Stack operations\n");
+        printf("7. Queue operations\n");
+        printf("8. Linked list\n");
+        printf("9. Bubble sort\n");
+        printf("10. Insertion sort\n");
+        printf("11. Merge sort\n");
+        printf("12. Selection sort\n");
+        printf("0. Exit\n");
+        printf("Choose: ");
+        scanf("%d",&ch);
+
+        switch(ch){
+            case 1: string_operations(); break;
+            case 2: linear_search(); break;
+            case 3: binary_search(); break;
+            case 4: matrix_multiply(); break;
+            case 5: matrix_add(); break;
+            case 6: stack_operations(); break;
+            case 7: queue_operations(); break;
+            case 8: linked_list(); break;
+            case 9: bubble_sort(); break;
+            case 10: insertion_sort(); break;
+            case 11: mergesort_main(); break;
+            case 12: selection_sort(); break;
+        }
+    } while(ch != 0);
+
+    return 0;
+}

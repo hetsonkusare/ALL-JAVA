@@ -1,0 +1,256 @@
+✅ 1. PHP Program – Display Date, Time & Greeting
+Program (greeting.php)
+<?php
+date_default_timezone_set("Asia/Kolkata");
+
+$time = date("H");
+$dateTime = date("d-m-Y h:i:s A");
+
+if ($time >= 5 && $time < 12) {
+    $msg = "Good Morning";
+} elseif ($time >= 12 && $time < 17) {
+    $msg = "Good Afternoon";
+} else {
+    $msg = "Good Evening";
+}
+
+echo "<h2>$msg</h2>";
+echo "Current Date & Time: $dateTime";
+?>
+
+Output
+Good Afternoon
+Current Date & Time: 03-12-2025 02:15:43 PM
+
+✅ 2. User Profile – Form + PHP Display
+HTML (profile.html)
+<form action="profile.php" method="post">
+    Name: <input type="text" name="name"><br><br>
+    Email: <input type="email" name="email"><br><br>
+    Age: <input type="number" name="age"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+PHP (profile.php)
+<?php
+echo "Name: ".$_POST['name']."<br>";
+echo "Email: ".$_POST['email']."<br>";
+echo "Age: ".$_POST['age']."<br>";
+?>
+
+Output
+Name: Het Sonkusare
+Email: het@gmail.com
+Age: 21
+
+✅ 3. PHP Program – Find Maximum & Minimum
+Program
+<?php
+$numbers = array(10, 5, 90, 2, 45);
+
+$max = max($numbers);
+$min = min($numbers);
+
+echo "Numbers: ".implode(", ", $numbers)."<br>";
+echo "Maximum: $max<br>";
+echo "Minimum: $min<br>";
+?>
+
+Output
+Numbers: 10, 5, 90, 2, 45
+Maximum: 90
+Minimum: 2
+
+✅ 4. Cookie – Create, Access, Destroy
+Set Cookie (set_cookie.php)
+<?php
+setcookie("username", "Het", time() + 3600);
+echo "Cookie Created";
+?>
+
+Access Cookie (get_cookie.php)
+<?php
+echo "Cookie Value: ".$_COOKIE['username'];
+?>
+
+Destroy Cookie (delete_cookie.php)
+<?php
+setcookie("username", "", time() - 3600);
+echo "Cookie Deleted";
+?>
+
+Output
+Cookie Created
+Cookie Value: Het
+Cookie Deleted
+
+✅ 5. Store Image in Database (MySQL + PHP)
+Table
+CREATE TABLE images(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    image LONGBLOB
+);
+
+Upload Form
+<form action="upload.php" method="post" enctype="multipart/form-data">
+    <input type="file" name="img">
+    <input type="submit" value="Upload">
+</form>
+
+PHP (upload.php)
+<?php
+$conn = mysqli_connect("localhost","root","","test");
+
+$image = addslashes(file_get_contents($_FILES['img']['tmp_name']));
+
+$query = "INSERT INTO images(image) VALUES('$image')";
+mysqli_query($conn, $query);
+
+echo "Image Uploaded Successfully!";
+?>
+
+Output
+Image Uploaded Successfully!
+
+✅ 6. Email Registration Form + Store in Database
+Table
+CREATE TABLE email_register(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(150)
+);
+
+Form
+<form action="save_email.php" method="post">
+    Name: <input type="text" name="name"><br><br>
+    Email: <input type="email" name="email"><br><br>
+    <input type="submit" value="Register">
+</form>
+
+PHP (save_email.php)
+<?php
+$conn = mysqli_connect("localhost","root","","test");
+
+$name = $_POST['name'];
+$email = $_POST['email'];
+
+$query = "INSERT INTO email_register(name,email) VALUES('$name','$email')";
+mysqli_query($conn,$query);
+
+echo "Registration Successful!";
+?>
+
+Output
+Registration Successful!
+
+✅ 7. Student Registration Form → Display in Another Page
+Form (student.html)
+<form action="student_data.php" method="post">
+    Roll No: <input type="text" name="roll"><br><br>
+    Name: <input type="text" name="name"><br><br>
+    Course: <input type="text" name="course"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+Display Page (student_data.php)
+<?php
+echo "Roll No: ".$_POST['roll']."<br>";
+echo "Name: ".$_POST['name']."<br>";
+echo "Course: ".$_POST['course']."<br>";
+?>
+
+Output
+Roll No: 101
+Name: Het Sonkusare
+Course: BCA
+
+✅ 8. Display JSON Data into HTML Table Using AJAX
+data.json
+[
+    {"id":1,"name":"Het","email":"het@gmail.com"},
+    {"id":2,"name":"Raj","email":"raj@gmail.com"}
+]
+
+HTML + AJAX (index.html)
+<table border="1" id="tbl"></table>
+
+<script>
+fetch("data.json")
+.then(res => res.json())
+.then(data => {
+    let table = "<tr><th>ID</th><th>Name</th><th>Email</th></tr>";
+    data.forEach(d => {
+        table += `<tr><td>${d.id}</td><td>${d.name}</td><td>${d.email}</td></tr>`;
+    });
+    document.getElementById("tbl").innerHTML = table;
+});
+</script>
+
+Output
+ID   Name     Email
+1    Het      het@gmail.com
+2    Raj      raj@gmail.com
+
+✅ 9. Swap Two Images Using JavaScript
+Program
+<img id="img1" src="a.jpg" width="200">
+<img id="img2" src="b.jpg" width="200"><br><br>
+
+<button onclick="swap()">Swap Images</button>
+
+<script>
+function swap() {
+    let temp = document.getElementById("img1").src;
+    document.getElementById("img1").src = document.getElementById("img2").src;
+    document.getElementById("img2").src = temp;
+}
+</script>
+
+Output
+Before Swap:
+Image 1 = a.jpg
+Image 2 = b.jpg
+
+After Clicking Swap:
+Image 1 = b.jpg
+Image 2 = a.jpg
+
+✅ 10. Registration Form With AJAX Validation
+Form (ajax_form.html)
+<form id="regForm">
+    Name: <input type="text" id="name"><br><br>
+    Email: <input type="email" id="email"><br><br>
+    <button type="submit">Submit</button>
+</form>
+<div id="msg"></div>
+
+<script>
+document.getElementById("regForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    let formData = new FormData();
+    formData.append("name", document.getElementById("name").value);
+    formData.append("email", document.getElementById("email").value);
+
+    fetch("validate.php", { method:"POST", body: formData })
+    .then(res => res.text())
+    .then(data => document.getElementById("msg").innerHTML = data);
+};
+</script>
+
+PHP (validate.php)
+<?php
+$name = $_POST['name'];
+$email = $_POST['email'];
+
+if(empty($name) || empty($email)){
+    echo "All fields are required!";
+} else {
+    echo "Form Submitted Successfully!";
+}
+?>
+
+Output
+Form Submitted Successfully!
+
+✅ DONE!
